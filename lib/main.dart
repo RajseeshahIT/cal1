@@ -1,27 +1,35 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, library_private_types_in_public_api
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(new MyApp());
+void main(){
+  runApp(cal1());
+}
 
-class MyApp extends StatelessWidget {
+// ignore: camel_case_types
+class cal1 extends StatelessWidget {
+  const cal1({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Flutter Demo',
-      theme: new ThemeData(
+      theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new MyHomePage(title: 'Calculator'),
+      home: MyHomePage(title: 'Calculator'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => new _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -53,7 +61,9 @@ class _MyHomePageState extends State<MyHomePage> {
     } else if(buttonText == "."){
 
       if(_output.contains(".")){
-        print("Already conatains a decimals");
+        if (kDebugMode) {
+          print("Already contains a decimals");
+        }
         return;
 
       } else {
@@ -87,7 +97,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
     }
 
-    print(_output);
+    if (kDebugMode) {
+      print(_output);
+    }
 
     setState(() {
 
@@ -98,11 +110,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget buildButton(String buttonText) {
+    // ignore: unnecessary_new
     return new Expanded(
-      child: new OutlineButton(
-        padding: new EdgeInsets.all(24.0),
-        child: new Text(buttonText,
-          style: TextStyle(
+      child: OutlinedButton(
+        child: Text(buttonText,
+          style: const TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.bold
           ),
@@ -116,64 +128,63 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: new AppBar(
-          title: new Text(widget.title),
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
         ),
-        body: new Container(
-            child: new Column(
-              children: <Widget>[
-                new Container(
-                    alignment: Alignment.centerRight,
-                    padding: new EdgeInsets.symmetric(
-                        vertical: 24.0,
-                        horizontal: 12.0
-                    ),
-                    child: new Text(output, style: new TextStyle(
-                      fontSize: 48.0,
-                      fontWeight: FontWeight.bold,
-
-                    ))),
-                new Expanded(
-                  child: new Divider(),
+        body: Column(
+          children: <Widget>[
+            Container(
+                alignment: Alignment.centerRight,
+                padding: const EdgeInsets.symmetric(
+                    vertical: 24.0,
+                    horizontal: 12.0
                 ),
+                child: Text(output, style: const TextStyle(
+                  fontSize: 48.0,
+                  fontWeight: FontWeight.bold,
+
+                ))),
+            const Expanded(
+              child: Divider(),
+            ),
 
 
-                new Column(children: [
-                  new Row(children: [
-                    buildButton("7"),
-                    buildButton("8"),
-                    buildButton("9"),
-                    buildButton("/")
-                  ]),
+            Column(children: [
+              Row(children: [
+                buildButton("7"),
+                buildButton("8"),
+                buildButton("9"),
+                buildButton("/")
+              ]),
 
-                  new Row(children: [
-                    buildButton("4"),
-                    buildButton("5"),
-                    buildButton("6"),
-                    buildButton("X")
-                  ]),
+              Row(children: [
+                buildButton("4"),
+                buildButton("5"),
+                buildButton("6"),
+                buildButton("X")
+              ]),
 
-                  new Row(children: [
-                    buildButton("1"),
-                    buildButton("2"),
-                    buildButton("3"),
-                    buildButton("-")
-                  ]),
+              Row(children: [
+                buildButton("1"),
+                buildButton("2"),
+                buildButton("3"),
+                buildButton("-")
+              ]),
 
-                  new Row(children: [
-                    buildButton("."),
-                    buildButton("0"),
-                    buildButton("00"),
-                    buildButton("+")
-                  ]),
+              Row(children: [
+                buildButton("."),
+                buildButton("0"),
+                buildButton("00"),
+                buildButton("+")
+              ]),
 
-                  new Row(children: [
-                    buildButton("CLEAR"),
-                    buildButton("="),
-                  ])
-                ])
-              ],
-            )));
+              Row(children: [
+                buildButton("CLEAR"),
+                buildButton("="),
+              ])
+            ])
+          ],
+        ));
   }
 }
